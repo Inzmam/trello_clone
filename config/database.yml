@@ -1,0 +1,30 @@
+development:
+  adapter:  postgresql
+  host:     <%= ENV['HOST'] %>
+  encoding: unicode
+  database: <%= ENV['DEV_DB'] %>
+  pool:     5
+  username: <%= ENV['USERNAME'] %>
+  password: <%= ENV['PASSWORD'] %>
+  template: template0
+
+test:
+  adapter:  postgresql
+  host:     <%= ENV['HOST'] %>
+  encoding: unicode
+  database: <%= ENV['TEST_DB'] %>
+  pool:     5
+  username: <%= ENV['USERNAME'] %>
+  password: <%= ENV['PASSWORD'] %>
+  template: template0
+
+production:
+  adapter:  postgresql
+  host:     <%= ENV['HOST'] %>
+  port:     <%= ENV['PORT'] %>
+  encoding: unicode
+  database: <%= ENV['PROD_DB'] %>
+  pool:     5
+  username: <%= ENV['USERNAME'] %>
+  password: <%= ENV['PASSWORD'] %>
+  template: template0
