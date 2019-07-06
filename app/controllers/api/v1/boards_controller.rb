@@ -12,42 +12,31 @@ class Api::V1::BoardsController < ApplicationController
   def show
   end
 
-  # GET /boards/new
-  def new
-    @board = Board.new
-  end
-
-  # GET /boards/1/edit
-  def edit
-  end
-
   # POST /boards
   # POST /boards.json
   def create
-    @board = Board.new(board_params)
+    @board = @api_user.boards.new(board_params)
 
-    respond_to do |format|
-      if @board.save
-        format.html { redirect_to @board, notice: 'Board was successfully created.' }
-        format.json { render :show, status: :created, location: @board }
-      else
-        format.html { render :new }
-        format.json { render json: @board.errors, status: :unprocessable_entity }
-      end
+    if @board.save
+      render json: {
+        success: 'Board was successfully created.',
+        board: @board
+      }
+    else
+      render json: { errors: @board.errors }
     end
   end
 
   # PATCH/PUT /boards/1
   # PATCH/PUT /boards/1.json
   def update
-    respond_to do |format|
-      if @board.update(board_params)
-        format.html { redirect_to @board, notice: 'Board was successfully updated.' }
-        format.json { render :show, status: :ok, location: @board }
-      else
-        format.html { render :edit }
-        format.json { render json: @board.errors, status: :unprocessable_entity }
-      end
+    if @board.update(board_params)
+      render json: {
+        success: 'Board was successfully updated.',
+        board: @board
+      }
+    else
+      render json: { errors: @board.errors }
     end
   end
 
@@ -64,11 +53,11 @@ class Api::V1::BoardsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_board
-      @board = Board.find(params[:id])
+      @board = @api_user.boards.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def board_params
-      params.require(:board).permit(:title, :user_id)
+      params.require(:board).permit(:title)
     end
 end
