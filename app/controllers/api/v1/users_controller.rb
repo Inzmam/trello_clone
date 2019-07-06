@@ -1,7 +1,6 @@
 class Api::V1::UsersController < ApplicationController
 
   skip_before_action :authenticate_request
-  skip_before_action :verify_authenticity_token
 
   def create
     @api_user = User.new(user_params)
