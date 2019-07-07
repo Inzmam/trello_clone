@@ -4,12 +4,16 @@ class Api::V1::BoardsController < ApplicationController
   # GET /boards
   # GET /boards.json
   def index
-    @boards = Board.all
+    render json: {
+      count: @api_user.boards.count,
+      boards: @api_user.boards
+    }
   end
 
   # GET /boards/1
   # GET /boards/1.json
   def show
+    render json: { board: @board }
   end
 
   # POST /boards
